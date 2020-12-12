@@ -1,7 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:puppy/utils/app_routes.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -54,121 +53,144 @@ class _AuthCardState extends State<AuthCard>
 
   @override
   Widget build(BuildContext context) {
-    final device_size = MediaQuery.of(context);
+    final deviceSize = MediaQuery.of(context);
     return Card(
       elevation: 8.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: AnimatedContainer(
         duration: Duration(milliseconds: 400),
         curve: Curves.easeIn,
-        width: device_size.size.width * 0.75,
+        width: deviceSize.size.width * 0.75,
         height: !_invalidaForm
             ? (_authMode == AuthMode.Login
-                ? device_size.size.height * 0.68
-                : device_size.size.height * 0.70)
+                ? deviceSize.size.height * 0.70 // Login without failed submit
+                : deviceSize.size.height * 0.75) // Register without failed submit
             : (_authMode == AuthMode.Login
-                ? device_size.size.height * 0.75
-                : device_size.size.height * 0.77),
+                ? deviceSize.size.height * 0.75 // Login with failed submit
+                : deviceSize.size.height * 0.80), // Register without failed submit
         padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _form,
-          child: SingleChildScrollView(
-            reverse: true,
-            child: Padding(
-              padding:
-                  EdgeInsets.only(bottom: device_size.viewInsets.bottom * 0.30),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 180,
-                    child: Image.asset('assets/images/puppy_bluelogo.png'),
-                  ),
-                  Text(
-                    'PUPPY',
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '- Sua plataforma quando pensa no seu pet -',
-                    style: TextStyle(
-                        fontSize: 13,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColorLight),
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 25)),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'E-mail',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor)),
+        child: Center(
+          child: Form(
+            key: _form,
+            child: SingleChildScrollView(
+              reverse: true,
+              child: Padding(
+                padding:
+                    EdgeInsets.only(bottom: deviceSize.viewInsets.bottom * 0.40),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: deviceSize.size.height * 0.25,
+                      child: Image.asset('assets/images/puppy_bluelogo.png'),
                     ),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value.isEmpty || !value.contains('@')) {
-                        return 'Informa um e-mail valido';
-                      }
-                    },
-                    onSaved: (value) => null,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 10)),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                        labelText: 'Senha',
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor))),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value.isEmpty || value.length < 5) {
-                        return "Informe uma senha maior que 5 caracteres";
-                      }
-                    },
-                    onSaved: (value) => null,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 10)),
-                  // if (_authMode == AuthMode.Signup)
-                    FadeTransition(
-                      opacity: _animationController,
-                                          child: TextFormField(
-                          decoration: InputDecoration(
-                              labelText: 'Confirme a senha',
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor))),
-                          obscureText: true,
-                          validator: _authMode == AuthMode.Signup
-                              ? (value) {
-                                  if (value != _passwordController.text) {
-                                    return "Senha são diferentes!";
+                    Text(
+                      'PUPPY',
+                      style: TextStyle(
+                          fontSize: deviceSize.size.width * 0.055,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      '- Uma plataforma para os cuidados do seu pet -',
+                      style: TextStyle(
+                          fontSize: deviceSize.size.width * 0.030,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColorLight),
+                    ),
+                    Padding(
+                        padding:
+                            EdgeInsets.only(top: deviceSize.size.height * 0.025)),
+                    TextFormField(
+                      decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.all(deviceSize.size.height * 0.010),
+                          labelText: 'E-mail',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            borderSide:
+                                BorderSide(color: Theme.of(context).primaryColor),
+                          )),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value.isEmpty || !value.contains('@')) {
+                          return "Informe um e-mail valido!";
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _authData['email'] = value,
+                    ),
+                    Padding(
+                        padding:
+                            EdgeInsets.only(top: deviceSize.size.height * 0.015)),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.all(deviceSize.size.height * 0.010),
+                          labelText: 'Senha',
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor))),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value.isEmpty || value.length < 5) {
+                          return "Informe uma senha maior que 5 caracteres";
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _authData['password'] = value,
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 10)),
+                    if (_authMode == AuthMode.Signup)
+                      FadeTransition(
+                        opacity: _animationController,
+                        child: TextFormField(
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(
+                                    deviceSize.size.height * 0.010),
+                                labelText: 'Confirme a senha',
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor))),
+                            obscureText: true,
+                            validator: _authMode == AuthMode.Signup
+                                ? (value) {
+                                    if (value != _passwordController.text) {
+                                      return "Senha são diferentes!";
+                                    }
+                                    return null;
                                   }
-                                  return null;
-                                }
-                              : null),
-                    ),
-                  Padding(padding: EdgeInsets.only(top: 10)),
-                  RaisedButton(
-                    padding: EdgeInsets.symmetric(horizontal: 18),
-                    onPressed: _submit,
-                    child: Text(
-                        " ${_authMode == AuthMode.Login ? 'Entrar' : 'Cadastrar'}",
-                        style: TextStyle(color: Colors.white)),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  FlatButton(
-                      onPressed: _switchAuthMode,
+                                : null),
+                      ),
+                    Padding(
+                        padding:
+                            EdgeInsets.only(top: deviceSize.size.height * 0.025)),
+                    RaisedButton(
+                      elevation: 6.0,
+                      splashColor: Colors.black,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: deviceSize.size.width * 0.08),
+                      // onPressed: _submit,
+                      onPressed: () => Navigator.of(context)
+                          .pushReplacementNamed(AppRoutes.PETSHOPS),
                       child: Text(
-                          "ALTERNAR P/ ${_authMode == AuthMode.Login ? 'REGISTRAR' : 'LOGIN'}"),
-                      textColor: Theme.of(context).primaryColor)
-                ],
+                          " ${_authMode == AuthMode.Login ? 'Entrar' : 'Cadastrar'}",
+                          style: TextStyle(color: Colors.white)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    FlatButton(
+                        onPressed: _switchAuthMode,
+                        child: Text(
+                            "ALTERNAR P/ ${_authMode == AuthMode.Login ? 'REGISTRAR' : 'LOGIN'}"),
+                        textColor: Theme.of(context).primaryColor)
+                  ],
+                ),
               ),
             ),
           ),

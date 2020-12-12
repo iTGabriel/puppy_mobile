@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:puppy/widget/auth_form.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -9,7 +8,9 @@ class AuthScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('Puppy'),
+        // leading: Image.asset('assets/images/puppy_bluelogo.png'),
+        title: Text('Puppy - Uma plataforma para pets'),
+        centerTitle: true,
       ),
       body: Stack(
         children: [
@@ -17,7 +18,7 @@ class AuthScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 gradient: LinearGradient(
               colors: [
-                Color.fromRGBO(66, 135, 245, 0.5),
+                Color.fromRGBO(0, 113, 188, 1),
                 Color.fromRGBO(255, 255, 255, 0.8),
               ],
               begin: Alignment.bottomCenter,

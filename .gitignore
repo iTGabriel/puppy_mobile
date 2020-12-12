@@ -40,7 +40,7 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# devg related
-.ios/*
-.android/*
-.puppy.iml
+# devG related
+ios/*
+android/*
+.metadata
