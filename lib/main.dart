@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:puppy/providers/petshops.dart';
 import 'package:puppy/screens/auth_screen.dart';
 import 'package:puppy/screens/petshop_detail_screen.dart';
+import 'package:puppy/screens/petshop_user_order_screen.dart';
 import 'package:puppy/screens/petshops_overview_screen.dart';
 import 'package:puppy/utils/app_routes.dart';
 
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
           routes: {
             AppRoutes.HOME: (_) => AuthScreen(),
             AppRoutes.PETSHOPS: (_) => PetshopOverviewScreen(),
-            AppRoutes.PETSHOPS_DETAIL: (_) => PetshopDetailScreen(),
+            AppRoutes.PETSHOP_DETAIL: (_) => PetshopDetailScreen(),
+            AppRoutes.PETSHOP_USER_ORDER: (_) => PetshopUserOrderScreen(),
           },
         ));
   }

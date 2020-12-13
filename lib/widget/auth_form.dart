@@ -64,10 +64,12 @@ class _AuthCardState extends State<AuthCard>
         height: !_invalidaForm
             ? (_authMode == AuthMode.Login
                 ? deviceSize.size.height * 0.70 // Login without failed submit
-                : deviceSize.size.height * 0.75) // Register without failed submit
+                : deviceSize.size.height *
+                    0.75) // Register without failed submit
             : (_authMode == AuthMode.Login
                 ? deviceSize.size.height * 0.75 // Login with failed submit
-                : deviceSize.size.height * 0.80), // Register without failed submit
+                : deviceSize.size.height *
+                    0.80), // Register without failed submit
         padding: EdgeInsets.all(16.0),
         child: Center(
           child: Form(
@@ -75,8 +77,8 @@ class _AuthCardState extends State<AuthCard>
             child: SingleChildScrollView(
               reverse: true,
               child: Padding(
-                padding:
-                    EdgeInsets.only(bottom: deviceSize.viewInsets.bottom * 0.40),
+                padding: EdgeInsets.only(
+                    bottom: deviceSize.viewInsets.bottom * 0.40),
                 child: Column(
                   children: [
                     SizedBox(
@@ -98,17 +100,18 @@ class _AuthCardState extends State<AuthCard>
                           color: Theme.of(context).primaryColorLight),
                     ),
                     Padding(
-                        padding:
-                            EdgeInsets.only(top: deviceSize.size.height * 0.025)),
+                        padding: EdgeInsets.only(
+                            top: deviceSize.size.height * 0.025)),
                     TextFormField(
                       decoration: InputDecoration(
                           contentPadding:
                               EdgeInsets.all(deviceSize.size.height * 0.010),
                           labelText: 'E-mail',
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide:
-                                BorderSide(color: Theme.of(context).primaryColor),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0)),
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor),
                           )),
                       obscureText: true,
                       validator: (value) {
@@ -120,8 +123,8 @@ class _AuthCardState extends State<AuthCard>
                       onSaved: (value) => _authData['email'] = value,
                     ),
                     Padding(
-                        padding:
-                            EdgeInsets.only(top: deviceSize.size.height * 0.015)),
+                        padding: EdgeInsets.only(
+                            top: deviceSize.size.height * 0.015)),
                     TextFormField(
                       controller: _passwordController,
                       decoration: InputDecoration(
@@ -155,7 +158,8 @@ class _AuthCardState extends State<AuthCard>
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor))),
+                                        color:
+                                            Theme.of(context).primaryColor))),
                             obscureText: true,
                             validator: _authMode == AuthMode.Signup
                                 ? (value) {
@@ -167,13 +171,13 @@ class _AuthCardState extends State<AuthCard>
                                 : null),
                       ),
                     Padding(
-                        padding:
-                            EdgeInsets.only(top: deviceSize.size.height * 0.025)),
+                        padding: EdgeInsets.only(
+                            top: deviceSize.size.height * 0.025)),
                     RaisedButton(
                       elevation: 6.0,
                       splashColor: Colors.black,
                       padding: EdgeInsets.symmetric(
-                          horizontal: deviceSize.size.width * 0.08),
+                          horizontal: deviceSize.size.width * 0.1),
                       // onPressed: _submit,
                       onPressed: () => Navigator.of(context)
                           .pushReplacementNamed(AppRoutes.PETSHOPS),

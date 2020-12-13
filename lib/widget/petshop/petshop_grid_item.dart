@@ -9,12 +9,13 @@ class PetshopGridItem extends StatelessWidget {
     final Petshop petshop = Provider.of(context, listen: false);
 
     return ClipRRect(
-       borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(10),
       child: GridTile(
         child: GestureDetector(
           child: Image.network(petshop.imageUrl, fit: BoxFit.cover),
           onTap: () {
-            Navigator.of(context).pushNamed(AppRoutes.PETSHOPS_DETAIL, arguments: petshop);
+            Navigator.of(context)
+                .pushNamed(AppRoutes.PETSHOP_DETAIL, arguments: petshop);
           },
         ),
         footer: GridTileBar(

@@ -4,7 +4,7 @@ class Petshop with ChangeNotifier {
   final String id;
   final String title;
   final String description;
-  final List<Map<String, double>> services;
+  final List<Map<String, dynamic>> services;
   final List<String> photografies;
   final String imageUrl;
   bool isFavorite;
