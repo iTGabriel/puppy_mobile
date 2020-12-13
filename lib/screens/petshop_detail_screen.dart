@@ -82,6 +82,7 @@ class _PetshopDetailScreenState extends State<PetshopDetailScreen> {
                   _serviceSelected(
                       servicoData['servico'], servicoData['preco']);
                 })),
+            Divider(),
             RaisedButton(
               elevation: 6.0,
               splashColor: Colors.black,
@@ -92,8 +93,11 @@ class _PetshopDetailScreenState extends State<PetshopDetailScreen> {
               color: Theme.of(context).primaryColor,
               onPressed: () => Navigator.of(context)
                   .pushNamed(AppRoutes.PETSHOP_USER_ORDER, arguments: petshop),
-              child: Text("Contratar", style: TextStyle(color: Colors.white)),
-            )
+              child: Text("Contratar", style: TextStyle(color: Colors.white, fontSize: deviceSize.size.height * 0.020 )),
+            ),
+            Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: deviceSize.size.height * 0.01)),
           ],
         ),
       ),

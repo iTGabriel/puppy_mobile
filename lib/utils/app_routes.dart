@@ -7,4 +7,6 @@ class AppRoutes {
   static const PETSHOP_USER_ORDER_TRANSPORT = '/petshops-user-order-transport';
   static const PETSHOP_USER_ORDER_TRANSPORT_PAYMENT =
       '/petshops-user-order-transport-payment';
+  static const PETSHOP_USER_ORDER_TRANSPORT_PAYMENT_SUCCESS =
+      '/petshops-user-order-transport-payment-success';
 }
