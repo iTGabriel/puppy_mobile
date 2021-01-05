@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:puppy/models/petshop.dart';
@@ -10,14 +12,34 @@ class PetshopDetailScreen extends StatefulWidget {
 }
 
 class _PetshopDetailScreenState extends State<PetshopDetailScreen> {
+  Map services = {};
+  // Servicos(nameService) : value
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context);
     final Petshop petshop = ModalRoute.of(context).settings.arguments;
     final petshopServicos = petshop.services;
-    final services = [];
 
-    _serviceSelected(String servico, double preco) {}
+    // IMPLEMENTANDO
+    void _serviceSelected(String servico, double preco) {
+      if (!services.containsKey(servico)) {
+        services[servico] = preco;
+      } else {
+        services.remove(servico);
+      }
+      setState(() {});
+      print(services);
+    }
+
+    bool _verifyServices(String servico) {
+      return services.containsKey(servico);
+    }
+
+    @override
+    void initState() {
+      super.initState();
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -70,12 +92,26 @@ class _PetshopDetailScreenState extends State<PetshopDetailScreen> {
                 style: TextStyle(fontSize: deviceSize.size.height * 0.03)),
             ...petshopServicos.map((servicoData) => GestureDetector(
                 child: Card(
+                  color: _verifyServices(servicoData['servico'])
+                      ? Theme.of(context).primaryColor
+                      : null,
                   child: ListTile(
                     trailing: Text('R\$${servicoData['preco']}0',
                         style: TextStyle(
-                            fontSize: deviceSize.size.height * 0.026)),
-                    title: Text(servicoData['servico']),
-                    subtitle: Text('Descrição do serviço'),
+                            fontSize: deviceSize.size.height * 0.026,
+                            color: _verifyServices(servicoData['servico'])
+                                ? Colors.white
+                                : Colors.black)),
+                    title: Text(servicoData['servico'],
+                        style: TextStyle(
+                            color: _verifyServices(servicoData['servico'])
+                                ? Colors.white
+                                : Colors.black)),
+                    subtitle: Text('Descrição do serviço',
+                        style: TextStyle(
+                            color: _verifyServices(servicoData['servico'])
+                                ? Colors.white
+                                : null)),
                   ),
                 ),
                 onTap: () {
@@ -92,8 +128,14 @@ class _PetshopDetailScreenState extends State<PetshopDetailScreen> {
                   borderRadius: BorderRadius.circular(10)),
               color: Theme.of(context).primaryColor,
               onPressed: () => Navigator.of(context)
-                  .pushNamed(AppRoutes.PETSHOP_USER_ORDER, arguments: petshop),
-              child: Text("Contratar", style: TextStyle(color: Colors.white, fontSize: deviceSize.size.height * 0.020 )),
+                  .pushNamed(AppRoutes.PETSHOP_USER_ORDER, arguments: [
+                petshop,
+                [services]
+              ]),
+              child: Text("Contratar",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: deviceSize.size.height * 0.020)),
             ),
             Padding(
                 padding: EdgeInsets.symmetric(
